@@ -11,7 +11,7 @@ describe('Test', async() => {
   const year: number = 2022;
   const weather: string = "plentyrain";
 
-  const day2: number = 3;
+  const day2: number = 2;
   const weather2: string = "poorrain";//norain
 
   it('create_crop_info!', async () => {
@@ -23,8 +23,8 @@ describe('Test', async() => {
         ],
         pg.program.programId
       );
-    /*
-    console.log("On-chain step 1");
+    
+    //console.log("On-chain step 1");
     await pg.program.methods
       .createCropInfo(month,year)
       .accounts({
@@ -32,8 +32,7 @@ describe('Test', async() => {
         cropInfo: cropInfoPDA,
       })
       .rpc();
-    console.log("On-chain step 2");
-    //expect((await pg.program.account.certAccount.fetch(certAccountPDA)).data).to.equal("brian");
+    
     // Fetch the created account
     const certVault = await pg.program.account.cropInfo.fetch(cropInfoPDA);
 
@@ -44,36 +43,14 @@ describe('Test', async() => {
 
     // Check whether the data on-chain is equal to local 'data'
     //assert(data == certVault.idNo);
-    */
-    /*
-    await pg.program.methods
-      .addCropInfo(day2,month,weather2)
-      .accounts({
-        signer: pg.wallet.publicKey,
-        cropInfo: cropInfoPDA,
-      })
-      .rpc();
-
-    const certVault2 = await pg.program.account.cropInfo.fetch(cropInfoPDA);
-
-    console.log("On-chain count is:", certVault2.count);
-    console.log("On-chain data is:", certVault2.month.toString());
-    //console.log("On-chain data is:", certVault2.weather.toString());
-    //console.log("On-chain data is:", certVault2.certAccount.toString());
-    //console.log("On-chain data is:", certAccount.data.toString());
-    //console.log("On-chain certAccount item count is:", certVault2.certAccount.toString().length);
-    //console.log("On-chain certAccount items is:", certVault2.certAccount.indexOf("1"));
-    console.log("On-chain bump is:", certVault2.bump);
-    */
-    // Check whether the data on-chain is equal to local 'data'
-    //assert(data == certAccount.idNo);
+    
     let listener = null;
 
     let [event, slot] = await new Promise((resolve, _reject) => {
       listener = pg.program.addEventListener("MyEvent", (event, slot) => {
         resolve([event, slot]);
       });
-      //pg.program.rpc.addCropInfo();
+
       pg.program.methods
       .addCropInfo(day2,month,year,weather2)
       .accounts({
